@@ -1,0 +1,438 @@
+{
+  "name": "Lead Scoring & Notification Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "channel": "#sales",
+        "text": "=New Hot Lead: {{$json.fields.full_name}}, Budget £{{$json.fields.budget}}, Interest: {{$json.fields.interest_level}} – Check Airtable for details.",
+        "otherOptions": {},
+        "attachments": []
+      },
+      "id": "a4f587b2-43d4-46ba-a070-339d9485ea11",
+      "name": "Slack Notify",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        560,
+        240
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "g75j3cQxwpoM7Oqf",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "id": "f1e139e6-ab70-4abb-8c12-d4665cc59bfe",
+      "name": "Delay 2 min",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        780,
+        240
+      ],
+      "webhookId": "0f688cae-6ae9-4361-aaaf-15227399f304"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "channel": "#sales",
+        "text": "=Follow-up: Have we contacted {{$('Is Hot Lead?').item.json.fields.full_name}} yet?",
+        "otherOptions": {},
+        "attachments": []
+      },
+      "id": "be16044f-33ba-4650-a8c7-c36f85a029ef",
+      "name": "Slack Follow-up1",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        240
+      ],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "g75j3cQxwpoM7Oqf",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appMm8T12ocnnSB7O",
+          "mode": "list",
+          "cachedResultName": "Lead Management",
+          "cachedResultUrl": "https://airtable.com/appMm8T12ocnnSB7O"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblVqXXecM8S4n0mQ",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appMm8T12ocnnSB7O/tblVqXXecM8S4n0mQ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "budget": "={{ $json.budget }}",
+            "full_name": "={{ $json.full_name }}",
+            "email": "={{ $json.email }}",
+            "phone": "={{ $json.phone }}",
+            "company_size": "={{ $json.company_size }}",
+            "interest_level": "={{ $json.interest_level }}",
+            "score": "={{ $json.score }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "company_size",
+              "displayName": "company_size",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "interest_level",
+              "displayName": "interest_level",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Low",
+                  "value": "Low"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "High",
+                  "value": "High"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Cold",
+                  "value": "Cold"
+                },
+                {
+                  "name": "Warm",
+                  "value": "Warm"
+                },
+                {
+                  "name": "Hot",
+                  "value": "Hot"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        120,
+        240
+      ],
+      "id": "dc0fc170-54f6-4b6b-a189-ce7cd0136ce3",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ZNjg52r4ROhhBK1Y",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "82a3e261-9a40-42ca-9fc2-b9b3c6adbf5d",
+              "leftValue": "={{ $json.fields.score }}",
+              "rightValue": "Hot",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        340,
+        240
+      ],
+      "id": "928c8c2d-5d97-4369-9f1d-79638c153ba3",
+      "name": "Is Hot Lead?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2981997c-2d87-41b6-88cc-22db143f7388",
+              "leftValue": "={{Boolean($json[\"Full Name\"] && $json[\"Email\"] && $json[\"Budget\"] > 0 && $json[\"Interest Level\"])}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -540,
+        240
+      ],
+      "id": "8d6cad53-0c25-4973-9178-f799972e3e67",
+      "name": "Input Validation"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\nconst full_name = input[\"Full Name\"];\nconst email = input.Email;\nconst budget = input.Budget;\nconst interest_level = input[\"Interest Level\"];\n\n// Required field check\nif (!full_name || !email || budget === undefined || !interest_level) {\n  throw new Error(\"Missing required fields: full_name, email, budget, or interest_level.\");\n}\n\n// Return structured data\nreturn [{\n  json: {\n    full_name,\n    email,\n    phone: input.Phone || null,\n    company_size: input[\"Company Size\"] || null,\n    budget,\n    interest_level\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        240
+      ],
+      "id": "57c7923f-367d-43ad-bb9e-198c9cb8e728",
+      "name": "Cleaning"
+    },
+    {
+      "parameters": {
+        "jsCode": "const budget = parseFloat($json[\"budget\"]);\nconst interest = $json[\"interest_level\"];\nlet score = \"Cold\";\nif (budget > 5000 && interest === \"High\") {\n  score = \"Hot\";\n} else if (budget > 2000) {\n  score = \"Warm\";\n}\nreturn [{ json: { ...$json, score } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        240
+      ],
+      "id": "4f25df95-7502-48cf-b90b-f33a1843886f",
+      "name": "Score Lead"
+    },
+    {
+      "parameters": {
+        "formId": "B71MgMpV"
+      },
+      "type": "n8n-nodes-base.typeformTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -720,
+        240
+      ],
+      "id": "be88ee6c-dfd0-4da3-abe3-d166a31ecde3",
+      "name": "Typeform Trigger",
+      "webhookId": "ccd8a8b0-0075-404e-9065-46b33ddd904c",
+      "credentials": {
+        "typeformApi": {
+          "id": "7Z13A1W0MxYxop5m",
+          "name": "Typeform account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Slack Notify": {
+      "main": [
+        [
+          {
+            "node": "Delay 2 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delay 2 min": {
+      "main": [
+        [
+          {
+            "node": "Slack Follow-up1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Is Hot Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Hot Lead?": {
+      "main": [
+        [
+          {
+            "node": "Slack Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input Validation": {
+      "main": [
+        [
+          {
+            "node": "Cleaning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cleaning": {
+      "main": [
+        [
+          {
+            "node": "Score Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score Lead": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typeform Trigger": {
+      "main": [
+        [
+          {
+            "node": "Input Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5bbd0014-4c2d-43e2-942d-83e15ffa6067",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "af09b95d6973c63ab84eacc6a1bf60e92756e6db0f4684f34935ee5c2ddaf5ad"
+  },
+  "id": "RWfmmrhD3wMgAxxc",
+  "tags": []
+}
