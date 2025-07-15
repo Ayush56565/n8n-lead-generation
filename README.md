@@ -61,14 +61,6 @@ Implemented via JavaScript node:
 
 ---
 
-## ⚡ Potential Improvements
-- Add email notifications.
-- Expand scoring logic with more business rules.
-- Integrate CRM sync (e.g., HubSpot or Salesforce).
-- Log activities in Google Sheets.
-
----
-
 ## 📅 Created With
 - [n8n](https://n8n.io/) - Workflow Automation
 - [Typeform](https://typeform.com/) - Lead Capture
