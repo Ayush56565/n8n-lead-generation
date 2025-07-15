@@ -13,21 +13,6 @@ This project is an **automated lead intake and scoring workflow** built in **n8n
 - Notifies the sales team on Slack if a lead is `Hot`.
 - Sends a follow-up Slack reminder after a delay.
 
----
-
-## 🔧 Workflow Overview
-
-```mermaid
-graph TD
-  A[Typeform Trigger] --> B[Input Validation]
-  B --> C[Cleaning]
-  C --> D[Score Lead]
-  D --> E[Create Airtable Record]
-  E --> F{Is Hot Lead?}
-  F -- Yes --> G[Slack Notify: Hot Lead]
-  G --> H[Wait 2 minutes]
-  H --> I[Slack Follow-up Reminder]
-```
 
 ---
 
