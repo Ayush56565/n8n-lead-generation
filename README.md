@@ -5,7 +5,7 @@ This project is an **automated lead intake and scoring workflow** built in **n8n
 ---
 ## 🖼️ Workflow
 The lead generation workflow will look like this.  
-![Upload Screen](wf.png)
+![Workflow Screenshot](wf.png)
 ---
 ## ✨ Features
 - Captures lead submissions from Typeform.
