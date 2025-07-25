@@ -3,6 +3,9 @@
 This project is an **automated lead intake and scoring workflow** built in **n8n**. It captures leads from **Typeform**, validates and cleans the data, scores the leads based on budget and interest, stores the data in **Airtable**, and sends **Slack notifications** to alert the sales team for follow-ups.
 
 ---
+## 🖼️ Workflow
+The APIs are available to test in the swagger UI.  
+![Upload Screen](screenshots/wf.png)
 
 ## ✨ Features
 - Captures lead submissions from Typeform.
