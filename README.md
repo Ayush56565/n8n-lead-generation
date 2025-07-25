@@ -4,9 +4,9 @@ This project is an **automated lead intake and scoring workflow** built in **n8n
 
 ---
 ## 🖼️ Workflow
-The APIs are available to test in the swagger UI.  
-![Upload Screen](screenshots/wf.png)
-
+The lead generation workflow will look like this.  
+![Upload Screen](wf.png)
+---
 ## ✨ Features
 - Captures lead submissions from Typeform.
 - Validates essential fields.
